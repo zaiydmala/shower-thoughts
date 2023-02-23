@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 function App({ Component, pageProps }) {
   return (
     <Layout>
-      <ToastContainer />
+      <ToastContainer Limit={1}/>
     <Component {...pageProps} />
     </Layout>
   );

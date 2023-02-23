@@ -13,11 +13,22 @@ export default function Post() {
     const submitPost = async(e) => { 
         e.preventDefault();    
         
-        //Run checks for description 
+    //Run checks for description 
     if(!post.description) {
-        toast.error('Description missing ');
+        toast.error('Description missing ', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClost: 100,
+        });
+        return;
     }
-    
+    //Run checks for post length
+    if(post.description.length > 300) {
+        toast.error('Nobody gonna read this longass post ', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClost: 100,
+        });
+        return;
+    }
         //Make a new post
         const collectionRef = collection(db, 'posts');
         await addDoc(collectionRef, {
