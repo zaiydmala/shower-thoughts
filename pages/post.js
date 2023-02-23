@@ -3,7 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Router, useRouter } from 'next/router';
 import { useEffect, useState } from 'react'; 
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-
+import { toast } from 'react-toastify';
 export default function Post() {
     //Form state
     const [post, setPost] = useState({description: "" });
@@ -11,7 +11,13 @@ export default function Post() {
     const route = useRouter();
     //Submit post
     const submitPost = async(e) => { 
-        e.preventDefault();
+        e.preventDefault();    
+        
+        //Run checks for description 
+    if(!post.description) {
+        toast.error('Description missing ');
+    }
+    
         //Make a new post
         const collectionRef = collection(db, 'posts');
         await addDoc(collectionRef, {
