@@ -18,7 +18,7 @@ export default function Post() {
         if(!post.description) {
             toast.error('Description missing ', {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 100,
+                autoClose: 1500,
             });
             return;
         }
@@ -26,7 +26,7 @@ export default function Post() {
         if(post.description.length > 300) {
             toast.error('Nobody gonna read this longass post ', {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 100,
+                autoClose: 1500,
             });
             return;
         }
@@ -47,6 +47,10 @@ export default function Post() {
             username: user.displayName,
             })
             setPost({description: ''});
+            toast.success('Post has been made!', { 
+                position: toast.POSITION.TOP_CENTER, autoclose: 1500,
+                }
+            )
             return route.push('/')
         }
     };
