@@ -62,7 +62,7 @@ import { arrayUnion, doc, getDoc, onSnapshot, Timestamp, updateDoc } from "fireb
     useEffect(() => {
         if(!router.isReady) return;
         getComments();
-    },[]);    
+    },[router.isReady ]);    
 
     return(
         <div>
