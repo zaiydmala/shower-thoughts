@@ -3,7 +3,7 @@
  import { useEffect, useState } from "react";
  import {auth, db } from '../utils/firebase';
  import { toast, Toast } from "react-toastify";
-import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, onSnapshot, Timestamp, updateDoc } from "firebase/firestore";
 
 
  export default function Details() {
@@ -25,7 +25,7 @@ import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
             });
             return; 
         }
-        if(message.length > 50) {
+        if(message.length > 200) {
             toast.error('Nobody got time for your longass opinions, got it? ', {
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 1500,
@@ -42,9 +42,28 @@ import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
                 time: Timestamp.now(),
             })
         })
-
         setMessage('');
     };
+
+    //Render Comments
+    /* const getComments = async() => {
+        const docRef = doc(db,'posts', routeData.id);
+        const docSnap = await getDoc(docRef);
+        setAllMessages(docSnap.data().comments);
+    } */
+    const getComments = async() => {
+        const docRef = doc(db,'posts', routeData.id);
+        const unsubscribe = onSnapshot(docRef, (snapshot) => {
+            setAllMessages(snapshot.data().comments);
+        });
+        return unsubscribe;
+    }
+
+    useEffect(() => {
+        if(!router.isReady) return;
+        getComments();
+    },[]);    
+
     return(
         <div>
             <Message {...routeData}></Message>
@@ -59,13 +78,15 @@ import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
                 </div>
                 <div className="py-6">
                     <h2 className="font-bold">Comments</h2>
-                    {/* {setAllMessages?.map(message => (
-                        <div>
-                            <div>
-                                <img src="" alt="" />
+                    {allMessages?.map(message => (
+                        <div className="bg-white p-4 my-4 border-2" key={message.time}>
+                            <div className="flex items-center gap-2 mb-4">
+                                <img className="w-10 rounded-full" src={message.avatar} alt=""  />
+                                <h2>{message.userName}</h2>
                             </div>
+                            <h2>{message.message}</h2>
                         </div>
-                    ))} */}
+                    ))}
                 </div>
             </div>
         </div>
