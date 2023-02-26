@@ -7,6 +7,8 @@ import Link from 'next/link';
 
 
 export default function Home() {
+  
+  
   //Create a state with all the posts
   const [allPosts, setAllPosts] = useState([]);
 
@@ -30,8 +32,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className='my-12 text-lg font-medium'>
-        <h2>See what other people are saying</h2>
+      <div className='my-6 text-lg font-medium'>
+        <h2 className='pb-4'>Write what you were thinking of before you came here</h2>
         {allPosts.map((post) => (
           <Message {...post} key={post.id}>
             <Link href={{ pathname: `/${post.id}`, query: {...post} }}>
