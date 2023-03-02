@@ -20,7 +20,7 @@ export default function Nav() {
                   className=" cursor-pointer text-2xl"
                 />
                 {!user && (
-                    <Link href={"/auth/login"} className='py-2 px-4 text-sm bg-cyan-500 text-white rounded-lg font-medium ml-8 dark:text-black'>
+                    <Link href={"/auth/login"} className='py-2 px-4 text-center text-sm bg-cyan-500 text-white rounded-lg font-medium ml-8 dark:text-black'>
                     Join Now!
                     </Link>
                 )}
